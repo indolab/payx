@@ -1,15 +1,10 @@
 package com.example.payx.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.payx.Repositories.UserRepo;
 import com.example.payx.models.User;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
@@ -17,22 +12,33 @@ public class UserService {
     private UserRepo userRepo;
     private User user ;
 
+    //private Integer pool = 1000;
+    
+    private String curr;
+
     public void registeruser(User user){
+        
+        
+        user.setBalance(100);
+       
         userRepo.save(user);
     }
-    public boolean authuser(String email,String password){
-        User user = userRepo.findByEmail(email);
-        return user !=null &&user.getpassword(email).equals(password);
+    public User getCurrentUser(){
+        user = userRepo.findByEmail(curr);
+       
+        return user;
 
     }
-    public User getCurrentUser() {
-        // Get the authentication object from the security context
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        
-        if (principal instanceof UserDetails) {
-            String email = ((UserDetails) principal).getUsername(); // Get the username (email)
-            return userRepo.findByEmail(email); // Find the user by email
+    public boolean authuser(String email,String password){
+        user = userRepo.findByEmail(email);
+        if(user !=null &&user.getpassword(email).equals(password)){
+            curr =email;
+            return true;
         }
-        return null; // User is not authenticated
+        else{
+            return false;
+        }
+
     }
+   
 }

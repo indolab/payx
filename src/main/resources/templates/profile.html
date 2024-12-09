@@ -2,11 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>User Profile</title>
+    
 </head>
 <body>
     <h1>User Profile</h1>
     <p>Name: <span th:text="${user.name}">User Name</span></p>
     <p>Email: <span th:text="${user.email}">User Email</span></p>
-    <!-- Add more user details as needed -->
+    <p>Balance: <span th:text="${user.Balance}">Balance</span></p>
+    <button type="submit" class="w">UPI Transfer</button>
+    <button type="submit" class="god">logout</button>
 </body>
 </html>

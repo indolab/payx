@@ -20,6 +20,8 @@ public class User {
 
     private String password;
 
+    private Integer Balance; 
+
     
 
     public Integer getId(){
@@ -52,6 +54,14 @@ public class User {
 
     public void setEmail(String email){
         this.email=email;
+    }
+
+    public Integer getBalance() {
+        return Balance;
+    }
+
+    public void setBalance(Integer Balance) {
+        this.Balance = Balance;
     }
 
  

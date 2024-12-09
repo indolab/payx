@@ -14,11 +14,11 @@ import com.example.payx.services.UserService;
 public class RegistorController {
     @Autowired
     private UserService userService;
-    @GetMapping("/")
+    @GetMapping("/register")
     public String getMethodName() {
         return "register";
     }
-    @PostMapping("/")
+    @PostMapping("/register")
     public String postMethodName(@ModelAttribute User user) {
         userService.registeruser(user);
         
