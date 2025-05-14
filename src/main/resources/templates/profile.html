@@ -21,7 +21,7 @@
         
         <div class="card-body">
             <p><strong>Email:</strong> <span th:text="${user.email}">user@example.com</span></p>
-            <p><strong>Current Balance:</strong> ₹<span th:text="${user.balance}">0</span></p>
+            <p><strong>User Id:</strong> <span th:text="${user.id}">0</span></p>
             <button onclick="window.location.href='/logout'" class="btn btn-success">
                 Logout
             </button>
@@ -60,6 +60,7 @@
                             <th>Amount (₹)</th>
                             <th>Sender ID</th>
                             <th>Receiver ID</th>
+                            <th>Type</th>
                             <th>Status</th>
                             
                             <th>Timestamp</th>
@@ -71,6 +72,7 @@
                             <td th:text="${transaction.id}">1</td>
                             <td th:text="${transaction.amount}">500</td>
                             <td th:text="${transaction.sender}">123</td>
+                            <td th:text="${transaction.type}">direct</td>
                             <td th:text="${transaction.receiver}">456</td>
                             <td th:text="${transaction.status}">Success</td>
                             

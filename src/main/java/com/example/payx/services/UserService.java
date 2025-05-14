@@ -59,21 +59,34 @@ public class UserService {
             userRepo.save(receiver);
     
             // ✅ Record the transaction
-            Transaction transaction = new Transaction();
-            transaction.setSender(sender);
-            transaction.setReceiver(receiver);
-            transaction.setAmount(bal);
-            transaction.setTimestamp(LocalDateTime.now());
-            transaction.setStatus("Success");
-            transaction.setType("Debit"); // sender's view is debit
-    
-            transactionRepo.save(transaction);
+            
+            
+            
+           // sender's view is debit
+            String Status = "Success";
+            String type = "Debit";
+            saveTransactiondir(bal, type, Status, receiverId);
+            
     
             return true;
         } else {
             System.out.println("Sender has insufficient balance or receiver not found.");
             return false;
         }
+    }
+    public void saveTransactiondir(Integer amount, String type, String status,Long receiverId) {
+        Optional<User> senderOpt = userRepo.findByEmail(curr);
+        Transaction transaction = new Transaction();
+        transaction.setSender(senderOpt.get());
+        
+        User receiver = userRepo.findById(receiverId).orElseThrow(() -> new RuntimeException("Receiver not found"));
+        transaction.setReceiver(receiver);
+        transaction.setAmount(amount);
+        transaction.setType(type);
+        transaction.setStatus(status);
+        transaction.setTimestamp(LocalDateTime.now());
+        
+        transactionRepo.save(transaction);
     }
     
 

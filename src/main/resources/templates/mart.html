@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PayX Market</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .animate-fadeIn {
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+  <header class="bg-blue-700 p-6 text-white text-center shadow-lg">
+    <h1 class="text-4xl font-bold">PayX Market</h1>
+    <p class="text-sm mt-1">Recharge, Pay Bills, and More in One Place</p>
+  </header>
+
+  <main class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+    <!-- Service Cards -->
+    <div onclick="openModal('Mobile Recharge')" class="bg-white p-6 rounded-xl shadow hover:shadow-xl cursor-pointer transition">
+      <h2 class="text-xl font-bold mb-2">Mobile Recharge</h2>
+      <p>Prepaid and Postpaid recharges</p>
+    </div>
+
+    <div onclick="openModal('TV Recharge')" class="bg-white p-6 rounded-xl shadow hover:shadow-xl cursor-pointer transition">
+      <h2 class="text-xl font-bold mb-2">TV Recharge</h2>
+      <p>DTH and Cable services</p>
+    </div>
+
+    <div onclick="openModal('Bus Booking')" class="bg-white p-6 rounded-xl shadow hover:shadow-xl cursor-pointer transition">
+      <h2 class="text-xl font-bold mb-2">Bus Booking</h2>
+      <p>Book tickets across India</p>
+    </div>
+
+    <div onclick="openModal('Gas Bill Payment')" class="bg-white p-6 rounded-xl shadow hover:shadow-xl cursor-pointer transition">
+      <h2 class="text-xl font-bold mb-2">Gas Bill Payment</h2>
+      <p>Pay PNG and LPG bills</p>
+    </div>
+
+    <div onclick="openModal('Electricity Payment')" class="bg-white p-6 rounded-xl shadow hover:shadow-xl cursor-pointer transition">
+      <h2 class="text-xl font-bold mb-2">Electricity Payment</h2>
+      <p>Pay your electricity bills</p>
+    </div>
+
+    <div onclick="openModal('Water Bill')" class="bg-white p-6 rounded-xl shadow hover:shadow-xl cursor-pointer transition">
+      <h2 class="text-xl font-bold mb-2">Water Bill</h2>
+      <p>Pay water bills easily</p>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 hidden items-center justify-center modal z-50 flex">
+    <div class="bg-white p-8 rounded-xl shadow-xl w-full max-w-md relative animate-fadeIn">
+      <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-600 hover:text-black text-2xl">&times;</button>
+      <h3 id="modalTitle" class="text-2xl font-bold mb-4"></h3>
+      <input type="text" id="modalInput" class="w-full p-3 border border-gray-300 rounded-lg mb-4" placeholder="Enter details..." />
+      <select id="priceSelect" class="w-full p-3 border border-gray-300 rounded-lg mb-4">
+        <option value="">Select a plan</option>
+        <option value="99">₹99 - Basic</option>
+        <option value="199">₹199 - Standard</option>
+        <option value="299">₹299 - Premium</option>
+        <option value="499">₹499 - Ultimate</option>
+      </select>
+      <button onclick="openPaymentModal()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Proceed to Pay</button>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div id="paymentModal" class="fixed inset-0 hidden items-center justify-center modal z-50 flex">
+    <div class="bg-white p-8 rounded-xl shadow-xl w-full max-w-md relative animate-fadeIn">
+      <button onclick="closePaymentModal()" class="absolute top-2 right-2 text-gray-600 hover:text-black text-2xl">&times;</button>
+      <h3 class="text-2xl font-bold mb-4 text-center">Choose Payment Method</h3>
+      <div class="flex flex-col gap-4">
+        <button onclick="submitPayment('DirectPay')" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Pay with DirectPay</button>
+        <button onclick="submitPayment('PayPal')" class="bg-yellow-400 text-white px-4 py-2 rounded-lg hover:bg-yellow-500">Pay with PayPal</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedService = "";
+
+    function openModal(service) {
+      selectedService = service;
+      document.getElementById('modalTitle').innerText = service;
+      document.getElementById('modalInput').placeholder = service.includes('Mobile') ? 'Enter Mobile Number' :
+        service.includes('TV') ? 'Enter TV Serial ID' :
+          service.includes('Bus') ? 'Enter Destination' :
+            'Enter Customer ID';
+      document.getElementById('modalInput').value = '';
+      document.getElementById('priceSelect').selectedIndex = 0;
+      document.getElementById('modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function openPaymentModal() {
+      const serialInput = document.getElementById('modalInput').value;
+      const price = document.getElementById('priceSelect').value;
+
+      if (!serialInput || !price) {
+        alert("Please enter details and select a price plan.");
+        return;
+      }
+
+      document.getElementById('modal').classList.add('hidden');
+      document.getElementById('paymentModal').classList.remove('hidden');
+    }
+
+    function closePaymentModal() {
+      document.getElementById('paymentModal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function submitPayment(method) {
+      const serialInput = document.getElementById('modalInput').value;
+      const price = document.getElementById('priceSelect').value;
+
+      const payload = {
+        service: selectedService,
+        serial: serialInput,
+        amount: parseInt(price),
+        paymentMode: method
+      };
+
+      fetch("/mart/pay", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      }).then(res => {
+        if (res.ok) {
+          alert("Payment initiated successfully!");
+        } else {
+          alert("Failed to initiate payment.");
+        }
+        closePaymentModal();
+      });
+    }
+  </script>
+</body>
+
+</html>
