@@ -25,7 +25,7 @@ public class LoginController {
 
    @PostMapping("/login")
 public String login(@RequestParam String email, @RequestParam String password, Model model) {
-    if (usersr.authuser(email, password)) {
+    if (usersr.authUser(email, password)) {
         // Set the user in the session or authentication context
         return "redirect:/profile"; // Redirect to profile on successful login
     } else {

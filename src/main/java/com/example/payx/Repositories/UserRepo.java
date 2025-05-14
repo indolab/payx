@@ -1,13 +1,10 @@
 package com.example.payx.Repositories;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.payx.models.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
-
-
-/**
- * UserRepo
- */
-public interface UserRepo extends JpaRepository<User, Integer> {
-User findByEmail(String email);
+public interface UserRepo extends JpaRepository<User, Long> {
+    // Use Optional to handle cases where no user is found
+    Optional<User> findByEmail(String email);
 }

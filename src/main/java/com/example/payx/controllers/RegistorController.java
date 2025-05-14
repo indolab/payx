@@ -20,7 +20,7 @@ public class RegistorController {
     }
     @PostMapping("/register")
     public String postMethodName(@ModelAttribute User user) {
-        userService.registeruser(user);
+        userService.registerUser(user);
         
         return "login";
     }
