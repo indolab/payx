@@ -5,15 +5,8 @@
 </head>
 <body>
 
-    <form id="UPIForm" method="POST" action="/upi">
-        <div class="m3">
-            <label for="Upi-Id" class="form-label">UPI-ID</label>
-            <input type="integer" class="form-control" id="upiid" name="upiid" placeholder="1232@payx" required>
-        </div>
-        <div class="m3">
-            <label for="Balance" class="form-label">Amount</label>
-            <input type="integer" class="form-control" id="balance" name="balance" placeholder="Enter balance" required>
-        </div>
+    <form id="UPIForm" method="POST" action="/payment/create">
+        
         <button type="submit" class="god">SEND</button>
     </form>
 

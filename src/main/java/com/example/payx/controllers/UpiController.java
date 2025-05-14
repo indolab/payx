@@ -1,4 +1,4 @@
-package com.example.payx.controllers;
+/*package com.example.payx.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,3 +27,4 @@ public String upimoney(@RequestParam Integer upiid ,@RequestParam Integer balanc
 
     
 }
+*/
